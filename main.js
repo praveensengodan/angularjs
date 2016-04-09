@@ -58,6 +58,18 @@ app.controller("editController",
     }
   }
 }]);
+app.controller("deleteController",["$routeParams","$http","$location",($routeParams,$http,$location)=>{
+  console.log($routeParams.id);
+    if($routeParams.id){
+      $http.delete(host+"employees/"+$routeParams.id)
+          .then((res)=>{
+            if(res.statusText == "OK" &&res.status == 200){
+              alert(res.statusText);
+              $location.path("#/table");
+            }
+          },(error)=>{console.error(error);});
+    }
+}])
 app.controller("tableController",["$scope","$http",($scope,$http)=>{
   $http.get(host+"employees")
       .then((res)=>{$scope.employees = res.data},(error)=>{console.error(error);});
@@ -72,6 +84,10 @@ app.config(['$routeProvider',($routeProvider)=>{
         templateUrl: 'partial/create.html',
         controller: 'editController'
       }).
+      when('/delete/:id', {
+        templateUrl: 'partial/table.html',
+        controller: 'deleteController'
+      }).
       when('/table', {
         templateUrl: 'partial/table.html',
         controller: 'tableController'
@@ -80,26 +96,4 @@ app.config(['$routeProvider',($routeProvider)=>{
         redirectTo: '/table'
       });
 
-}])
-// app.controller('createController',function($scope){
-//   $scope.employee = {
-//     id : 1,
-//     name : "Raj",
-//     address : "xxx",
-//     save : function(){
-//       alert($scope.employee.id+" "+$scope.employee.name)
-//     }
-//   }
-//   console.log($scope.employee);
-// });
-// app.config(['$routeProvider',function($routeProvider){
-//   $routeProvider.
-//       when('/create', {
-//         templateUrl: 'partial/create.html',
-//         controller: 'createController'
-//       }).
-//       otherwise({
-//         redirectTo: '/create'
-//       });
-//
-// }])
+}]);
