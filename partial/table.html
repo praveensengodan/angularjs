@@ -1,0 +1,22 @@
+<div>
+  <input type="test" name="search" placeholder="Filter...">
+  <a href="#/create" class="btn btn-primary pull-right">Add</a>
+</div>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <td>ID</td>
+      <td>Name</td>
+      <td>Address</td>
+      <td>Action</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="employee in employees">
+      <td>{{employee.id}}</td>
+      <td><a href="#/edit/{{employee.id}}">{{employee.name}}</a></td>
+      <td>{{employee.address}}</td>
+      <td><a href="#">delete</a></td>
+    </tr>
+  </tbody>
+</table>
